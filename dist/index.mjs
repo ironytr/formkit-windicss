@@ -4,10 +4,18 @@ import plugin from 'windicss/plugin';
  * The FormKit plugin for Tailwind
  * @public
  */
-const formKitVariants = plugin(({ addVariant }) => {
-    addVariant('pointer-group-hover', ({ modifySelectors }) => {
+//  const formKitVariants = plugin(({ addVariant }) => {
+//   addVariant('pointer-group-hover', ({ modifySelectors }) => {
+//     return modifySelectors(({ className }) => {
+//       return `.no-touch .group:hover .${className}`
+//     })
+//   })
+// })
+const formKitVariants = plugin(({ addVariant, e }) => {
+    addVariant('formkit-disabled', ({ modifySelectors }) => {
         return modifySelectors(({ className }) => {
-            return `.no-touch .group:hover .${className}`;
+            console.log(e, `[data-disabled] .${className}`);
+            return `[data-disabled] .${className}`;
         });
     });
 });
