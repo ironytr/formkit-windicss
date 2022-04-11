@@ -19,7 +19,16 @@ var plugin__default = /*#__PURE__*/_interopDefaultLegacy(plugin);
 //     })
 //   })
 // })
-const formKitVariants = plugin__default["default"](({ addVariant }) => {
+const formKitVariants = plugin__default["default"](({ addVariant, theme }) => {
+    const attributes = theme('formkit.attributes') || [];
+    const messageStates = theme('formkit.messageStates') || [];
+    addVariant('formkit-action', ({ modifySelectors }) => {
+        return modifySelectors(({ className }) => {
+            const x = `.formkit-actions .${className}, .formkit-actions.${className}`;
+            console.log('imhere x', x);
+            return x;
+        });
+    });
     [
         'disabled',
         'invalid',
@@ -28,15 +37,22 @@ const formKitVariants = plugin__default["default"](({ addVariant }) => {
         'loading',
         'submitted',
         'multiple',
+        ...attributes,
     ].forEach((attribute) => {
         addVariant(`formkit-${attribute}`, ({ modifySelectors }) => {
-            const x = modifySelectors(({ className }) => {
-                console.log(`formkit-${attribute}`);
-                const y = `.${className}[data-${attribute}], [data-${attribute}] .${className}, [data-${attribute}].${className}`;
-                console.log('y', y);
-                return y;
+            return modifySelectors(({ className }) => {
+                console.log(`.${className}[data-${attribute}], [data-${attribute}] .${className}, [data-${attribute}].${className}`);
+                return `.${className}[data-${attribute}], [data-${attribute}] .${className}, [data-${attribute}].${className}`;
             });
-            return x;
+        });
+    });
+    ['validation', 'error', ...messageStates].forEach((state) => {
+        addVariant(`formkit-message-${state}`, ({ modifySelectors }) => {
+            console.log('imhere124s');
+            return modifySelectors(({ className }) => {
+                console.log(`.${className}[data-message-type="${state}"], [data-message-type="${state}"] .${className}, [data-message-type="${state}"].${className}`);
+                return `.${className}[data-message-type="${state}"], [data-message-type="${state}"] .${className}, [data-message-type="${state}"].${className}`;
+            });
         });
     });
 });
