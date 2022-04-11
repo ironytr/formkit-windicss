@@ -12,6 +12,12 @@ import plugin from 'windicss/plugin';
 //   })
 // })
 const formKitVariants = plugin(({ addVariant, e }) => {
+    addVariant('first-line', ({ modifySelectors, separator }) => {
+        return modifySelectors(({ className }) => {
+            const newClass = e(`first-line${separator}${className}`);
+            return `.${newClass}:first-line`;
+        });
+    });
     addVariant('pointer-group-hover', ({ modifySelectors }) => {
         return modifySelectors(({ className }) => {
             return `.no-touch .group:hover .${className}`;
