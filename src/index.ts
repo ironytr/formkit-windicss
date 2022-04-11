@@ -14,14 +14,7 @@ import plugin from 'windicss/plugin'
 //   })
 // })
 
-const formKitVariants = plugin(({ addVariant, theme }) => {
-  const attributes: string[] = (theme('formkit.attributes') as string[]) || []
-
-  addVariant('formkit-action', ({ modifySelectors }) => {
-    return modifySelectors(({ className }) => {
-      return `.formkit-actions .${className}, .formkit-actions.${className}`
-    })
-  })
+const formKitVariants = plugin(({ addVariant }) => {
   ;[
     'disabled',
     'invalid',
@@ -30,32 +23,19 @@ const formKitVariants = plugin(({ addVariant, theme }) => {
     'loading',
     'submitted',
     'multiple',
-    ...attributes,
   ].forEach((attribute) => {
     addVariant(`formkit-${attribute}`, ({ modifySelectors }) => {
-      return modifySelectors(({ className }) => {
-        return `.${className}[data-${attribute}], [data-${attribute}] .${className}, [data-${attribute}].${className}`
+      const x = modifySelectors(({ className }) => {
+        console.log(`formkit-${attribute}`)
+
+        const y = `.${className}[data-${attribute}], [data-${attribute}] .${className}, [data-${attribute}].${className}`
+        console.log('y', y)
+        return y
       })
-    })
-  })
-  ;[
-    'disabled',
-    'invalid',
-    'errors',
-    'complete',
-    'loading',
-    'submitted',
-    'multiple',
-    ...attributes,
-  ].forEach((state) => {
-    addVariant(`formkit-message-${state}`, ({ modifySelectors }) => {
-      return modifySelectors(({ className }) => {
-        return `.${className}[data-message-type="${state}"], [data-message-type="${state}"] .${className}, [data-message-type="${state}"].${className}`
-      })
+      return x
     })
   })
 })
-
 /**
  * An object of ClassFunctions
  * @internal
