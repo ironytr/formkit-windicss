@@ -14,29 +14,47 @@ import plugin from 'windicss/plugin'
 //   })
 // })
 
-const formKitVariants = plugin(({ addVariant, e }) => {
-  addVariant('first-line', ({ modifySelectors, separator }) => {
+const formKitVariants = plugin(({ addVariant, theme }) => {
+  const attributes: string[] = (theme('formkit.attributes') as string[]) || []
+
+  addVariant('formkit-action', ({ modifySelectors }) => {
     return modifySelectors(({ className }) => {
-      const newClass = e(`first-line${separator}${className}`)
-      return `.${newClass}:first-line`
+      return `.formkit-actions .${className}, .formkit-actions.${className}`
     })
   })
-  addVariant('pointer-group-hover', ({ modifySelectors }) => {
-    return modifySelectors(({ className }) => {
-      return `.no-touch .group:hover .${className}`
+  ;[
+    'disabled',
+    'invalid',
+    'errors',
+    'complete',
+    'loading',
+    'submitted',
+    'multiple',
+    ...attributes,
+  ].forEach((attribute) => {
+    addVariant(`formkit-${attribute}`, ({ modifySelectors }) => {
+      return modifySelectors(({ className }) => {
+        return `.${className}[data-${attribute}], [data-${attribute}] .${className}, [data-${attribute}].${className}`
+      })
     })
   })
-
-  addVariant('formkit-disabled', ({ modifySelectors }) => {
-    return modifySelectors(({ className }) => {
-      console.log(e, `[data-disabled] .${className}`)
-
-      return `[data-disabled] .${className}`
+  ;[
+    'disabled',
+    'invalid',
+    'errors',
+    'complete',
+    'loading',
+    'submitted',
+    'multiple',
+    ...attributes,
+  ].forEach((state) => {
+    addVariant(`formkit-message-${state}`, ({ modifySelectors }) => {
+      return modifySelectors(({ className }) => {
+        return `.${className}[data-message-type="${state}"], [data-message-type="${state}"] .${className}, [data-message-type="${state}"].${className}`
+      })
     })
   })
 })
-
-console.log('am i not working???', formKitVariants)
 
 /**
  * An object of ClassFunctions

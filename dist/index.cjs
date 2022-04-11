@@ -19,26 +19,46 @@ var plugin__default = /*#__PURE__*/_interopDefaultLegacy(plugin);
 //     })
 //   })
 // })
-const formKitVariants = plugin__default["default"](({ addVariant, e }) => {
-    addVariant('first-line', ({ modifySelectors, separator }) => {
+const formKitVariants = plugin__default["default"](({ addVariant, theme }) => {
+    const attributes = theme('formkit.attributes') || [];
+    addVariant('formkit-action', ({ modifySelectors }) => {
         return modifySelectors(({ className }) => {
-            const newClass = e(`first-line${separator}${className}`);
-            return `.${newClass}:first-line`;
+            return `.formkit-actions .${className}, .formkit-actions.${className}`;
         });
     });
-    addVariant('pointer-group-hover', ({ modifySelectors }) => {
-        return modifySelectors(({ className }) => {
-            return `.no-touch .group:hover .${className}`;
+    [
+        'disabled',
+        'invalid',
+        'errors',
+        'complete',
+        'loading',
+        'submitted',
+        'multiple',
+        ...attributes,
+    ].forEach((attribute) => {
+        addVariant(`formkit-${attribute}`, ({ modifySelectors }) => {
+            return modifySelectors(({ className }) => {
+                return `.${className}[data-${attribute}], [data-${attribute}] .${className}, [data-${attribute}].${className}`;
+            });
         });
     });
-    addVariant('formkit-disabled', ({ modifySelectors }) => {
-        return modifySelectors(({ className }) => {
-            console.log(e, `[data-disabled] .${className}`);
-            return `[data-disabled] .${className}`;
+    [
+        'disabled',
+        'invalid',
+        'errors',
+        'complete',
+        'loading',
+        'submitted',
+        'multiple',
+        ...attributes,
+    ].forEach((state) => {
+        addVariant(`formkit-message-${state}`, ({ modifySelectors }) => {
+            return modifySelectors(({ className }) => {
+                return `.${className}[data-message-type="${state}"], [data-message-type="${state}"] .${className}, [data-message-type="${state}"].${className}`;
+            });
         });
     });
 });
-console.log('am i not working???', formKitVariants);
 /**
  * A function to generate FormKit class functions from a javascript object
  * @param classes - An object of input types with nested objects of sectionKeys and class lists
