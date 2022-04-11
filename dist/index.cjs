@@ -24,9 +24,7 @@ const formKitVariants = plugin__default["default"](({ addVariant, theme }) => {
     const messageStates = theme('formkit.messageStates') || [];
     addVariant('formkit-action', ({ modifySelectors }) => {
         return modifySelectors(({ className }) => {
-            const x = `.formkit-actions .${className}, .formkit-actions.${className}`;
-            console.log('imhere x', x);
-            return x;
+            return `.formkit-actions .${className}, .formkit-actions.${className}`;
         });
     });
     [
@@ -41,7 +39,6 @@ const formKitVariants = plugin__default["default"](({ addVariant, theme }) => {
     ].forEach((attribute) => {
         addVariant(`formkit-${attribute}`, ({ modifySelectors }) => {
             return modifySelectors(({ className }) => {
-                console.log(`.${className}[data-${attribute}], [data-${attribute}] .${className}, [data-${attribute}].${className}`);
                 return `.${className}[data-${attribute}], [data-${attribute}] .${className}, [data-${attribute}].${className}`;
             });
         });
@@ -50,7 +47,6 @@ const formKitVariants = plugin__default["default"](({ addVariant, theme }) => {
         addVariant(`formkit-message-${state}`, ({ modifySelectors }) => {
             console.log('imhere124s');
             return modifySelectors(({ className }) => {
-                console.log(`.${className}[data-message-type="${state}"], [data-message-type="${state}"] .${className}, [data-message-type="${state}"].${className}`);
                 return `.${className}[data-message-type="${state}"], [data-message-type="${state}"] .${className}, [data-message-type="${state}"].${className}`;
             });
         });
