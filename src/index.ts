@@ -13,7 +13,14 @@ import plugin from 'windicss/plugin'
 //     })
 //   })
 // })
+
 const formKitVariants = plugin(({ addVariant, e }) => {
+  addVariant('pointer-group-hover', ({ modifySelectors }) => {
+    return modifySelectors(({ className }) => {
+      return `.no-touch .group:hover .${className}`
+    })
+  })
+
   addVariant('formkit-disabled', ({ modifySelectors }) => {
     return modifySelectors(({ className }) => {
       console.log(e, `[data-disabled] .${className}`)
@@ -22,6 +29,8 @@ const formKitVariants = plugin(({ addVariant, e }) => {
     })
   })
 })
+
+console.log('am i not working???', formKitVariants)
 
 /**
  * An object of ClassFunctions

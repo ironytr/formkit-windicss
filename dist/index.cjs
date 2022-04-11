@@ -20,6 +20,11 @@ var plugin__default = /*#__PURE__*/_interopDefaultLegacy(plugin);
 //   })
 // })
 const formKitVariants = plugin__default["default"](({ addVariant, e }) => {
+    addVariant('pointer-group-hover', ({ modifySelectors }) => {
+        return modifySelectors(({ className }) => {
+            return `.no-touch .group:hover .${className}`;
+        });
+    });
     addVariant('formkit-disabled', ({ modifySelectors }) => {
         return modifySelectors(({ className }) => {
             console.log(e, `[data-disabled] .${className}`);
@@ -27,6 +32,7 @@ const formKitVariants = plugin__default["default"](({ addVariant, e }) => {
         });
     });
 });
+console.log('am i not working???', formKitVariants);
 /**
  * A function to generate FormKit class functions from a javascript object
  * @param classes - An object of input types with nested objects of sectionKeys and class lists
