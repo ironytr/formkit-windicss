@@ -30,7 +30,7 @@
   "type": "module",
   "peerDependencies": {
     "@types/windicss": "^3.0.0",
-    "windicss": "^2.0.0"
+    "windicss": "^3.5.1"
   },
   "dependencies": {}
 }
